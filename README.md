@@ -1,1 +1,1 @@
-# M-dulo-2-INDIVIDUAL
+# Modulo-2-INDIVIDUAL
