@@ -1,0 +1,374 @@
+---
+title: "Algoritmos"
+author: "Joaquin Bressan"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+## Primeros comandos de R
+
+R es un lenguaje muy parecido a MATLAB y trabaja fundamentalmente con variables que, en general, pueden ser matrices.
+
+```{r}
+A=38
+A=40
+B=60
+C=B-A
+C
+```
+
+```{r}
+Y=40
+alpha<-30
+```
+
+## Uso de Bases de Datos Internas de R
+
+R incluye una serie de conjuntos de datos preinstalados que son fundamentales para el aprendizaje de la estadística y la práctica de la programación. Estos recursos permiten experimentar con funciones de análisis y visualización sin necesidad de importar archivos externos.
+
+### El comando data()
+
+La función data() cumple dos propósitos principales dependiendo de cómo se utilice:
+
+#### Exploración:
+
+Al ejecutar data() sin argumentos, R despliega una lista completa de todos los datasets disponibles en los paquetes cargados. Esto es útil para identificar recursos de práctica.
+
+#### Carga de datos:
+
+Al especificar un nombre, por ejemplo data(cars), se asegura que el conjunto de datos esté disponible en el entorno global para su manipulación inmediata.
+
+### Datasets de referencia
+
+Existen conjuntos de datos clásicos que se utilizan frecuentemente en la literatura académica de R:
+
+#### AirPassengers:
+
+Es un objeto de clase time-series (serie temporal) que registra el total mensual de pasajeros de aerolíneas internacionales entre 1949 y 1960. Es ideal para practicar modelos de predicción y análisis de estacionalidad.
+
+#### cars:
+
+Es un data frame que contiene 50 observaciones sobre dos variables: velocidad (speed) y distancia de frenado (dist). Se utiliza habitualmente para introducir conceptos de regresión lineal simple.
+
+### El operador de extracción (\$)
+
+En R, los datos suelen estructurarse en data frames (tablas). El operador \$ es la herramienta estándar para acceder a columnas específicas de forma individual.
+
+#### Sintaxis:
+
+nombre_del_dataframe\$nombre_de_la_variable
+
+#### Utilidad:
+
+Al utilizar cars\$speed, se extraen únicamente los valores de la columna de velocidad como un vector independiente. Esto es indispensable cuando se requiere realizar cálculos específicos sobre una sola variable, tales como:
+
+-   Cálculos estadísticos: mean(cars\$speed) para obtener el promedio de velocidad.
+
+-   Visualización: hist(cars\$speed) para generar un histograma únicamente de esa variable.
+
+-   Filtrado: Permite realizar operaciones lógicas sobre una columna sin afectar la integridad del resto de la tabla.
+
+Este sistema de indexación facilita la limpieza y el análisis selectivo de la información dentro de cualquier proyecto de investigación o análisis de datos.
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure}
+plot(pressure, main="Presion del Gas Ideal", ylab="Presion [hPa]", xlab="Temperatura [K]", type="b", sub="Aumento exponencial del volumen de un gas ideal con el aumento de la temperatura, utilizando como gas de referencia Argon", col="darkgreen")
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Funciones estadisticas
+
+```{r}
+Z1<-rnorm(350,22,5) #Una distribucion normal de 350 valores, una media de 21 y una desviacion estandar de 5
+Z1
+```
+
+```{r}
+plot(Z1)
+W1<-length(Z1)
+W1
+X1<-(500:849)
+X1
+plot(X1,Z1)
+```
+
+```{r}
+hist(Z1, main="Histograma de edades", breaks=111)
+```
+
+```{r}
+density(Z1)
+```
+
+```{r}
+plot(density(Z1), type="p", col="darkred")
+lines(density(Z1), col="yellow")
+```
+
+## Ejercicio 1 de algoritmos
+
+Consigna: Utilizando las ultimas 3 cifras del DNI, crear una variable que tenga ese número.
+
+```{r}
+DNI=952
+```
+
+Consigna: Crear un vector que tenga todos los números desde el 1 al 952.
+
+```{r}
+secuencia_dni<-(1:952)
+print(secuencia_dni)
+```
+
+## Ejercicio 2 de algoritmos
+
+Consigna: Calcular la suma de todos los valores del vector Secuencia_dni.
+
+```{r}
+Total=0
+for(i in 1:952) {
+  Total=Total+secuencia_dni[i]
+  print(Total)}
+```
+
+Consigna: Repetir el ejercicio anterior, pero en Python.
+
+```{python}
+secuencia_dni = list(range(1, 953))
+
+total = 0
+for i in range(len(secuencia_dni)):
+    total = total + secuencia_dni[i]
+    print(total)
+```
+
+Consigna: Repetir el ejercicio anterior, pero en Julia.
+En este caso, no se programo en Julia debido a que este lenguaje de programación consumía demasiada RAM.
+
+## Ejercicio 3
+
+¿Cuanto tarda en correr el codigo del ejercicio 2?
+
+```{r}
+require(stats)
+Total=0
+Tiempo=system.time(for(i in 1:952) { 
+  Total=Total+secuencia_dni[i]}
+  )
+print(Tiempo)
+```
+```{r}
+sleep_for_a_minute=function(){Sys.sleep(14)}
+start_time=Sys.time()
+sleep_for_a_minute
+end_time=Sys.time()
+end_time-start_time
+```
+Consigna: Comparación de performance con system.time()
+
+```{r}
+system.time({
+ A <- numeric(50000)
+ for (i in 1:50000) {
+ A[i] <- i * 2
+ }
+})
+system.time({
+ B <- seq(from = 2, to = 100000, by = 2)
+})
+```
+
+## Biblioteca tictoc
+Esto de usar una biblioteca es llamar u cargar una procedimientos que generará comando nuevos en R. Como ya fue comentado, cargar una biblioteca implica ejecutar el comando install.packages() o usar en r-studio el menú de Herramientas y Luego Instalar paquetes. Las funciones tic y toc son de la misma biblioteca de Octave/Matlab y se usan de la misma manera para la evaluacion comparativa que el tiempo de sistema recién demostrado. Sin embargo, tictoc agrega mucha más comodidad al usuario y armonía al conjunto.
+```{r}
+library(tictoc)
+tic("sleeping")
+A<-20
+print("dormire una siestita...")
+## [1] "dormire una siestita..."
+Sys.sleep(2)
+print("...suena el despertador")
+## [1] "...suena el despertador"
+toc()
+```
+
+## Biblioteca rbenchmark
+La documentación de la función benchmark del paquete rbenchmark R lo describe como un simple contenedor alrededor de system.time. Sin embargo, agrega mucha conveniencia en comparación con las llamadas simples a system.time. Por ejemplo, requiere solo una llamada de referencia para cronometrar múltiples repeticiones de múltiples expresiones. Además, los resultados devueltos se organizan convenientemente en un marco de datos.
+
+## Implementación de una serie Fibonachi o Fibonacci
+En matemáticas, la sucesión o serie de Fibonacci es la siguiente sucesión infinita de números naturales:0,1,1,2,3,5,8 ... 89,144,233 ...
+La sucesión comienza con los números 0 y 1,2 a partir de estos, cada término es la suma de los dos anteriores, es la relación de recurrencia que la define.
+A los elementos de esta sucesión se les llama números de Fibonacci. Esta sucesión fue descrita en Europa por Leonardo de Pisa, matemático italiano del siglo XIII
+también conocido como Fibonacci. Tiene numerosas aplicaciones en ciencias de la computación, matemática y teoría de juegos. Original de la Biblioteca Universidad de Florencia. Liber Abachi- Autor Fibonacci
+
+Consigna: ¿Cuantas iteraciones se necesitan para generar un número de la serie mayor que 20 ? Además mostrar la serie de Fibonacci hasta el número obtenido anteriormente.
+```{r}
+# Inicialización
+a <- 0
+b <- 1
+serie <- c(a, b) # guardamos la serie
+contador <- 2 # ya tenemos 2 términos
+# Generar hasta superar 20
+while (b <= 20) {
+ siguiente <- a + b
+ a <- b
+ b <- siguiente
+ 
+ serie <- c(serie, b) # agregamos a la serie
+ contador <- contador + 1
+}
+# Resultados
+cat("Cantidad de iteraciones:", contador, "\n")
+cat("Primer número mayor a 20:", b, "\n")
+cat("Serie de Fibonacci hasta ese número:\n")
+print(serie)
+```
+
+
+Consigna: Compara la performance de ordenación del método burbuja vs el método sort de R. Usar método microbenchmark para una muestra de tamaño 20.000
+```{r}
+# Instalar paquete
+if (!require(microbenchmark)) {
+ install.packages("microbenchmark")
+ library(microbenchmark)
+}
+# Generar muestra
+set.seed(123)
+n <- 20000
+vector <- sample(1:100000, n, replace = TRUE)
+#Implementación de ordenamiento burbuja
+bubble_sort <- function(x) {
+ n <- length(x)
+ for (i in 1:(n-1)) {
+ for (j in 1:(n-i)) {
+ if (x[j] > x[j+1]) {
+ temp <- x[j]
+ x[j] <- x[j+1]
+ x[j+1] <- temp
+ }
+ }
+ }
+ return(x)
+}
+#Benchmark (OJO: burbuja es muy lento)
+resultado <- microbenchmark(
+ burbuja = bubble_sort(vector),
+ sort_R = sort(vector),
+ times = 5
+)
+print(resultado)
+```
+
+## La penitencia de Newton
+Comentan algunos historiadores que Newton tenía en la escuela primaria un profesor muy exigente que reclamaba constantemente la atención de los alumnos a lo que el estaba enseñando. Tan pronto alguien cometía un acto improcedente lo castigaba con una penitencia que consistía en traer para el día siguiente el resultado de la suma desde el número 1 hasta cierto número aleatoriamente elegido. Por supuesto esta tarea demandaría quedarse toda la noche haciendo las sumas parciales, tarea que el profesor ya había realizado previamente y que tenía registrado en un voluminoso cuaderno que (al estilo tabla de logaritmos) cargaba religiosamente en su portafolios de cuero.
+
+Consigna: Desarrolla dos algoritmos que hagan este trabajo, por ejemplo para sumar desde 1 hasta 1*1010 y verifica cuál de los dos es más eficiente.
+```{r}
+#Algoritmo 1: suma con for (iterativo)
+n <- 1010
+suma1 <- 0
+for (i in 1:n){
+ suma1 <- suma1 + i
+}
+suma1
+#Complejidad:O(n)(suma uno por uno)
+#Algoritmo 2: fórmula matemática (Gauss)
+n <- 1010
+suma2 <- n * (n + 1) / 2
+suma2
+#Complejidad:O(1)(una sola operación)
+#Comparación de eficiencia:medir tiempos con system.time():
+# Método 1
+system.time({
+ suma1 <- 0
+ for (i in 1:1010){
+ suma1 <- suma1 + i
+ }
+})
+# Método 2
+system.time({
+ suma2 <- 1010 * (1010 + 1) / 2
+})
+```
+Se desarrollaron dos algoritmos para sumar desde 1 hasta 1*1010. El método iterativo presenta complejidad lineal, lo que lo hace ineficiente para valores grandes como 10.000.000.000. En cambio, el uso de la fórmula cerrada reduce la complejidad a constante, permitiendo obtener el resultado de forma inmediata. Por lo tanto, el segundo algoritmo es significativamente más eficiente.
+
+##Matriz Inversa y Gráficos Violín
+En este apartado se realiza una comparación del rendimiento computacional de distintos métodos para estimar los coeficientes de un modelo de regresión lineal en R. Para ello, se emplea la librería microbenchmark, la cual permite medir con precisión los tiempos de ejecución de diferentes algoritmos a través de múltiples repeticiones.
+Se genera un conjunto de datos simulado utilizando funciones de generación aleatoria, compuesto por una matriz de variables explicativas X de dimensión 10000×100 y un vector respuesta y, construido como una combinación lineal de X con un término de error. Esto permite trabajar en un contexto controlado pero representativo de problemas de gran escala.
+A continuación, se implementan tres enfoques para el cálculo de los coeficientes: el método clásico mediante la función lm(), el cálculo explícito usando la inversa de la matriz y la resolución directa del sistema lineal equivalente mediante la función solve(). Para asegurar la validez de la comparación, se define una función que verifica que los coeficientes obtenidos por los distintos métodos sean numéricamente equivalentes dentro de una tolerancia establecida.
+Finalmente, se visualizan los resultados utilizando la librería ggplot2, a través de la función autoplot(), que permite representar gráficamente la distribución de los tiempos de ejecución de cada método, facilitando su análisis comparativo.
+```{r}
+library(microbenchmark)
+set.seed(2017)
+n <- 10000
+p <- 100
+X <- matrix(rnorm(n * p), n, p)
+y <- X %*% rnorm(p) + rnorm(100)
+check_for_equal_coefs <- function(values) {
+ tol <- 1e-12
+ max_error <- max(
+ c(
+ abs(values[[1]] - values[[2]]),
+ abs(values[[2]] - values[[3]]),
+ abs(values[[1]] - values[[3]])
+ )
+ )
+ max_error < tol
+}
+mbm <- microbenchmark(
+ "lm" = {
+ b <- lm(y ~ X + 0)$coef
+ },
+ "pseudoinverse" = {
+ b <- solve(t(X) %*% X) %*% t(X) %*% y
+ },
+ "linear system" = {
+ b <- solve(t(X) %*% X, t(X) %*% y)
+ },
+ check = check_for_equal_coefs
+)
+mbm
+library(ggplot2)
+autoplot(mbm)
+```
+La línea: autoplot(mbm) genera automáticamente un gráfico a partir del objeto de microbenchmark, y por defecto ese gráfico es un boxplot (diagrama de cajas), que muestra: mediana, cuartiles, dispersión de los tiempos. No es un gráfico de violín.
+Entonces, este gráfico que sigue es mucho mejor que solo boxplot.El violín deja ver si hay:colas largas, multimodalidad y variabilidad real.
+```{r}
+library(ggplot2)
+autoplot(mbm) +
+ geom_violin(fill = "skyblue", alpha = 0.4, color = NA) + # distribución
+ geom_boxplot(width = 0.2, outlier.shape = NA, alpha = 0.7) + # resumen
+ stat_summary(fun = mean, geom = "point",
+ shape = 23, size = 3, fill = "red") + # media
+ labs(
+ title = "Comparación de tiempos de ejecución",
+ x = "Método",
+ y = "Tiempo (ms)"
+ ) +
+ theme_minimal() +
+ theme(
+ legend.position = "none",
+ plot.title = element_text(hjust = 0.5, face = "bold")
+ )
+```
